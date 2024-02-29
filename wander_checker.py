@@ -1,10 +1,10 @@
 from selenium import webdriver
-import time
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import requests
 import json
 from datetime import datetime
+import time
 from dotenv import load_dotenv
 import os
 
