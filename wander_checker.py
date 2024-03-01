@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -47,7 +48,7 @@ def send_discord_message(webhook_url, message):
 def check_strings(main_str, sub_strs, server):
     for sub_str in sub_strs:
         if sub_str in main_str:
-            discord_send_message = f"{server}서버에 {datetime.now().strftime('%H:%M')} {sub_str} 출현"
+            discord_send_message = f"{server} 서버에 {datetime.now().strftime('%H:%M')} {sub_str} 출현"
             send_discord_message(webhook_url, discord_send_message)
         else:
             print(f"'{sub_str}' 없음")
@@ -59,10 +60,13 @@ def card_checker(server):
     time.sleep(0.5)
     check_strings(div_text, sub_strs, server)
     
+options = webdriver.ChromeOptions()
+options.add_argument('headless')
     
-driver = webdriver.Chrome() 
+driver = webdriver.Chrome(options=options) 
 driver.get(TARGET_URL)
-time.sleep(2)
+# time.sleep(2)
+driver.implicitly_wait(3)
 
 card_checker("루페온")
 card_checker("아만")
